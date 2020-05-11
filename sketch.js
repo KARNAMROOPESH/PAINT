@@ -1,32 +1,35 @@
 var ball;
 var database;
 var position;
+var smoke;
+var tra;
+var position;
 
 function setup(){
     database = firebase.database();
     console.log(database);
-    createCanvas(500,500);
+    createCanvas(400,400);
     
-    ball = createSprite(250,250,10,10);
-    ball.shapeColor = "red";
+    ball = createSprite(200,200,10,10);
+    ball.shapeColor = "black";
     var ballref = database.ref('ball/position');
     ballref.on("value",readPosition,showError);
+
+    smoke = loadImage("smoke.png");
+
+    var position = [ball.position.x, ball.position.y];
+    var tra = [];
+    tra.push(position);
 }
 
 function draw(){
-    background("white");
-    if(keyDown(LEFT_ARROW)){
-        changePosition(-1,0);
-    }
-    else if(keyDown(RIGHT_ARROW)){
-        changePosition(1,0);
-    }
-    else if(keyDown(UP_ARROW)){
-        changePosition(0,-1);
-    }
-    else if(keyDown(DOWN_ARROW)){
-        changePosition(0,+1);
-    }
+    background(250);
+   ball.x = mouseX;
+   ball.y = mouseY;
+
+   for (var i=1; i < tra ; i++) {
+    line(200,i,200,i+1);
+  }
     drawSprites();
 }
 
