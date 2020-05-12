@@ -2,8 +2,8 @@ var ball;
 var database;
 var position;
 var smoke;
-var tra;
-var position;
+var tra = [];
+var position = [];
 
 function setup(){
     database = firebase.database();
@@ -17,18 +17,20 @@ function setup(){
 
     smoke = loadImage("smoke.png");
 
-    var position = [ball.position.x, ball.position.y];
-    var tra = [];
+    position.push(ball.position.x, ball.position.y,ball.x,ball.y)
     tra.push(position);
+    console.log(tra);
+    console.log(position);
 }
 
 function draw(){
-    background(250);
+    background(255);
    ball.x = mouseX;
    ball.y = mouseY;
 
-   for (var i=1; i < tra ; i++) {
-    line(200,i,200,i+1);
+   for (var i = 1; i<tra.length ; i++) {
+    
+  image(smoke, tra[i][0], tra[i][1]);
   }
     drawSprites();
 }
@@ -48,4 +50,9 @@ function readPosition(data){
 
 function showError(){
     console.log("error connecting to the database");
+}
+
+function mouseDragged(){
+   
+        Matter.Body.setPosition(bird.body, {x: mouseX , y: mouseY});
 }
